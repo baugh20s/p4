@@ -3,6 +3,15 @@
 return [
 
     /*
+     * Nav bar - not currently being used; see nav.blade.php
+     */
+    'nav' => [
+        '/search' => 'Search',
+        '/contacts/create' => 'Add New',
+        '/contacts' => 'Preview Contacts',
+    ],
+
+    /*
     |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
@@ -13,7 +22,7 @@ return [
     |
     */
 
-    'name' => 'Project4',
+    'name' => 'Project 4: Contact Database',
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +35,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +48,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------

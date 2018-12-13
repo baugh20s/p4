@@ -1,22 +1,6 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/debug', function () {
-
     $debug = [
         'Environment' => App::environment(),
     ];
@@ -35,8 +19,45 @@ Route::get('/debug', function () {
         $debug['Database connection test'] = 'PASSED';
         $debug['Databases'] = array_column($databases, 'Database');
     } catch (Exception $e) {
-        $debug['Database connection test'] = 'FAILED: '.$e->getMessage();
+        $debug['Database connection test'] = 'FAILED: ' . $e->getMessage();
     }
 
     dump($debug);
 });
+
+/*
+ * HOME
+ */
+Route::get('/', 'WelcomeController');
+
+/*
+ * SEARCH
+ */
+Route::get('/search', 'ContactController@search');
+Route::get('contacts/search-process', 'ContactController@searchProcess');
+
+/*
+ * CREATE contact
+ */
+Route::get('/contacts/create', 'ContactController@create');
+Route::post('/contacts', 'ContactController@storeNew');
+/*
+ * READ contact
+ */
+Route::get('/contacts/{id}', 'ContactController@read');
+Route::get('/contacts', 'ContactController@index');
+
+/*
+* UPDATE contact
+*/
+
+/*
+ * DELETE contact
+ */
+Route::get('/contacts/{id}/delete', 'ContactController@delete');
+
+/*
+ * Misc static pages
+ */
+Route::view('/about', 'about');
+Route::view('/contactus', 'contactUs');
