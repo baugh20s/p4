@@ -4,6 +4,8 @@
     <div class='container'>
         <form method='POST' action='/contacts'>
 
+            {{ csrf_field() }}
+
             <h2>Add A Contact</h2>
 
             <div class='form-group'>
@@ -66,18 +68,19 @@
                        value='{{old('phone')}}'>
             </div>
 
-            {{--
-            <div class='form-group'>
-                <label for='hobbies'>Hobbies and Interests
+            <div>
+                <label for='hobbies'>Hobbies
                 </label>
-                <p>Add one hobby, interest, or activity per line.</p>
-                <br>
-                <input type='text'
-                        name='hobbies'
-                        id='hobbies'
-                        class='form-control'>
+                @foreach($hobbies as $hobbyId => $hobbyName)
+                    <br/>
+                    <div class='checkbox-inline'>
+                        <label><input {{ (in_array($hobbyId, old('hobbies', []) )) ? 'checked' : '' }}
+                                      type='checkbox'
+                                      {{--brackets tells php to accept multiple selections and put into array--}}
+                                      name='hobbies[]'
+                                      value='{{ $hobbyId }}'> {{ $hobbyName }} </label></div>
+                @endforeach
             </div>
-            --}}
 
             {{--submit button--}}
             <div>

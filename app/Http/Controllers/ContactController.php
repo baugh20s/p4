@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contact;
+use App\Hobby;
 
 class ContactController extends Controller
 {
@@ -14,9 +15,9 @@ class ContactController extends Controller
     public function search(Request $request)
     {
         return view('crm.search')->with([
-           'firstNameSearch' => session('firstName'),
-           'lastNameSearch' => session('lastName'),
-           'searchResults' => session('searchResults'),
+            'firstNameSearch' => session('firstName'),
+            'lastNameSearch' => session('lastName'),
+            'searchResults' => session('searchResults'),
         ]);
     }
 
@@ -33,11 +34,11 @@ class ContactController extends Controller
         if ($firstNameSearch OR $lastNameSearch) {
             # look for matches
             $contacts = Contact::select('*')
-            ->where([
-                ['first_name', 'like', '%' . $firstNameSearch . '%'],
-                ['last_name', 'like', '%' . $lastNameSearch . '%'],
-            ])
-            ->get();
+                ->where([
+                    ['first_name', 'like', '%' . $firstNameSearch . '%'],
+                    ['last_name', 'like', '%' . $lastNameSearch . '%'],
+                ])
+                ->get();
         }
 
         # redirect to index page with first and last name search values from session
@@ -65,7 +66,11 @@ class ContactController extends Controller
      */
     public function create()
     {
-        return view('crm.create');
+        $hobbies = Hobby::getForCheckboxes();
+
+        return view('crm.create')->with([
+            'hobbies' => $hobbies,
+        ]);
     }
 
     /*
@@ -80,20 +85,20 @@ class ContactController extends Controller
             'emailType' => 'required|string',
             'email' => 'required|email|between:7,100',
             'phoneType' => 'required|string',
-            'phone' => 'required|regex:/(01)[0-9]{9}/',
-            /*'hobbies' => 'required'*/
+            'phone' => 'required',
         ]);
 
         $contact = new Contact();
         $contact->first_name = $request->firstName;
         $contact->last_name = $request->lastName;
-        $contact->full_name = $request->firstName.''.$request->lastName;
+        $contact->full_name = $request->firstName . ' ' . $request->lastName;
         $contact->email_type = $request->emailType;
         $contact->email = $request->email;
         $contact->phone_type = $request->phoneType;
         $contact->phone = $request->phone;
-        /*$contact->hobbies = $request->hobbies;*/
         $contact->save();
+
+        $contact->hobbies()->sync($request->hobbies);
 
         return redirect('/contacts')->with([
             'alert' => 'Your contact was added.'
@@ -106,35 +111,90 @@ class ContactController extends Controller
     public function read($id)
     {
         $contact = \App\Contact::find($id);
+        $hobby = \App\Hobby::find($id);
 
         return view('crm.read')->with([
-            'contact' => $contact
+            'contact' => $contact,
+            'hobby' => $hobby,
         ]);
     }
 
     /*
-     * UPDATE
+     * SHOW UPDATE form
      */
-    /*
-     * public function update($id)
+    public function edit($id)
     {
-        $contact = \App\Contact::find($id);
+        $contact = Contact::find($id);
 
-        return redirect('/contacts/{id}')->with([
-            'alert' => 'Your contact was updated.'
+        $hobbies = Hobby::getForCheckboxes();
+
+        $hobbiesForContact = $contact->hobbies()->pluck('hobbies.id')->toArray();
+
+        return view('crm.update')->with([
+            'contact' => $contact,
+            'hobbies' => $hobbies,
+            'hobbiesForContact' => $hobbiesForContact,
         ]);
     }
-     */
 
     /*
-    * DELETE
+     * PROCESS UPDATE
+     */
+    public function update(Request $request, $id)
+    {
+        # Validate the request data
+        $request->validate([
+            'firstName' => 'required|string|between:1,75',
+            'lastName' => 'required|string|between:1,125',
+            'emailType' => 'required|string',
+            'email' => 'required|email|between:7,100',
+            'phoneType' => 'required|string',
+            'phone' => 'required',
+        ]);
+
+        $contact = Contact::find($id);
+
+        $contact->hobbies()->sync($request->hobbies);
+
+        $contact->first_name = $request->firstName;
+        $contact->last_name = $request->lastName;
+        $contact->full_name = $request->firstName . ' ' . $request->lastName;
+        $contact->email_type = $request->emailType;
+        $contact->email = $request->email;
+        $contact->phone_type = $request->phoneType;
+        $contact->phone = $request->phone;
+        $contact->save();
+
+        return redirect('/contacts/' . $id . '/edit')->with([
+            'alert' => 'Your contact was updated.',
+        ]);
+    }
+
+    /*
+    * SHOW DELETE confirmation page
     */
     public function delete($id)
     {
-        $contact = Contact::destroy($id);
+        $contact = Contact::find($id);
+
+        return view('crm.delete')->with([
+            'contact' => $contact,
+        ]);
+    }
+
+    /*
+     * PROCESS DELETE
+     */
+    public function destroy($id)
+    {
+        $contact = Contact::find($id);
+
+        $contact->hobbies()->detach();
+
+        $contact->delete();
 
         return redirect('/contacts')->with([
-            'alert' => 'Your contact was deleted.'
+            'alert' => ' " ' . $contact->full_name . ' " was removed.'
         ]);
     }
 

@@ -50,12 +50,14 @@ Route::get('/contacts', 'ContactController@index');
 /*
 * UPDATE contact
 */
+Route::get('/contacts/{id}/edit', 'ContactController@edit');
+Route::post('/contacts/{id}', 'ContactController@update');
 
 /*
  * DELETE contact
  */
 Route::get('/contacts/{id}/delete', 'ContactController@delete');
-
+Route::delete('/contacts/{id}', 'ContactController@destroy');
 /*
  * Misc static pages
  */

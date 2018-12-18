@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Contact;
-use App\Hobbie;
+use App\Hobby;
 
 class ContactHobbyTableSeeder extends Seeder
 {
@@ -20,7 +20,7 @@ class ContactHobbyTableSeeder extends Seeder
             $contact = Contact::where('full_name', 'like', $full_name)->first();
 
             foreach ($hobbies as $hobby_name) {
-                $hobby = Hobbie::where('hobby_name', 'like', $hobby_name)->first();
+                $hobby = Hobby::where('hobby_name', 'like', $hobby_name)->first();
 
                 $contact->hobbies()->save($hobby);
             }

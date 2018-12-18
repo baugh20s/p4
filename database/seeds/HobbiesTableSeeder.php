@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Hobbie;
+use App\Hobby;
 
 class HobbiesTableSeeder extends Seeder
 {
@@ -25,7 +25,7 @@ class HobbiesTableSeeder extends Seeder
         $count = count($hobbies);
 
         foreach ($hobbies as $key => $hobbyData) {
-            $hobby = new Hobbie();
+            $hobby = new Hobby();
 
             $hobby->created_at = Carbon\Carbon::now()->subDays($count)->toDateTimeString();
             $hobby->updated_at = Carbon\Carbon::now()->subDays($count)->toDateTimeString();
