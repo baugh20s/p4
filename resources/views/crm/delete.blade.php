@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h2>Are you sure you want to delete this contact?</h2>
+    <h3>Delete Record</h3>
 
     <form method='POST' action='/contacts/{{ $contact->id }}'>
         {{ method_field('delete') }}

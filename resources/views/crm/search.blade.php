@@ -49,9 +49,9 @@
                         No matches found.
                     @else
                         <ul>
-                        @foreach($searchResults as $contact)
-                            <li><a href='/contacts/{{ $contact->id }}'>{{ $contact->full_name }}</a></li>
-                        @endforeach
+                            @foreach($searchResults as $contact)
+                                <li><a href='/contacts/{{ $contact->id }}'>{{ $contact->full_name }}</a></li>
+                            @endforeach
                         </ul>
                     @endif
                 </div>
