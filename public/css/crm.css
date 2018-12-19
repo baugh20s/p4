@@ -3,14 +3,28 @@ body {
     margin-left: auto;
 }
 
-li {
-    list-style-type: none;
-}
-
 .container {
     width: 50%;
 }
 
 h1, h2, h3, h4, h5, h6 {
     text-align: center;
+}
+
+footer {
+    margin-top: 20px;
+}
+
+input[type='submit'] {
+    float: right;
+}
+
+.navMenu {
+    text-align: center;
+}
+
+.nav {
+    display: inline-block;
+    padding: 10px;
+    list-style-type: none;
 }

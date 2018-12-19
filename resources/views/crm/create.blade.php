@@ -6,7 +6,7 @@
 
             {{ csrf_field() }}
 
-            <h2>Add A Contact</h2>
+            <h3>Add A Contact</h3>
 
             <div class='form-group'>
                 <label for='firstName'>First Name

@@ -51,7 +51,7 @@ Route::get('/contacts', 'ContactController@index');
 * UPDATE contact
 */
 Route::get('/contacts/{id}/edit', 'ContactController@edit');
-Route::post('/contacts/{id}', 'ContactController@update');
+Route::put('/contacts/{id}', 'ContactController@update');
 
 /*
  * DELETE contact

@@ -1,14 +1,13 @@
 @extends('layouts.master')
 
 @section('content')
-
     <div class='container'>
         <form method='POST' action='/contacts/{{ $contact->id }}'>
 
             {{ method_field('put') }}
             {{ csrf_field() }}
 
-            <h2>Add A Contact</h2>
+            <h3>Add A Contact</h3>
 
             <div class='form-group'>
                 <label for='firstName'>First Name
@@ -17,7 +16,7 @@
                        name='firstName'
                        id='firstName'
                        class='form-control'
-                       value='{{old('firstName')}}'>
+                       value='{{old('firstName', $contact->first_name)}}'>
             </div>
 
             <div class='form-group'>
@@ -27,7 +26,7 @@
                        name='lastName'
                        id='lastName'
                        class='form-control'
-                       value='{{old('lastName')}}'>
+                       value='{{old('lastName', $contact->last_name)}}'>
             </div>
 
             <div class='form-group'>
@@ -37,7 +36,7 @@
                        name='emailType'
                        id='emailType'
                        class='form-control'
-                       value='{{old('emailType')}}'>
+                       value='{{old('emailType', $contact->email_type)}}'>
             </div>
 
             <div class='form-group'>
@@ -47,7 +46,7 @@
                        name='email'
                        id='email'
                        class='form-control'
-                       value='{{old('email')}}'>
+                       value='{{old('email', $contact->email)}}'>
             </div>
 
             <div class='form-group'>
@@ -57,7 +56,7 @@
                        name='phoneType'
                        id='phoneType'
                        class='form-control'
-                       value='{{old('phoneType')}}'>
+                       value='{{old('phoneType', $contact->phone_type)}}'>
             </div>
 
             <div class='form-group'>
@@ -67,7 +66,7 @@
                        name='phone'
                        id='phone'
                        class='form-control'
-                       value='{{old('phone')}}'>
+                       value='{{old('phone', $contact->phone)}}'>
             </div>
 
             <div class='form-group'>

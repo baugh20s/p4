@@ -5,9 +5,9 @@
     <section>
         <h3>{{$contact->full_name}}</h3>
         <div>
-            <p>Email: ({{$contact->email_type}}) {{$contact->email}}</p>
-            <p>Phone: ({{$contact->phone_type}}) {{$contact->phone}}</p>
-            <p>Hobbies:</p>
+            <label>Email:</label> <em>({{$contact->email_type}})</em> <p>{{$contact->email}}</p>
+            <label>Phone:</label> <em>({{$contact->phone_type}})</em> <p>{{$contact->phone}}</p>
+            <label>Hobbies:</label>
             <p>
                 @foreach($contact->hobbies as $hobby)
                     {{ $hobby->hobby_name }}
@@ -15,12 +15,10 @@
             </p>
         </div>
     </section>
-    <section>
-        <ul>
-            <li><a href='/contacts/{{ $contact->id }}/edit'>Edit</a></li>
-            <li><a href='/contacts'>Return to List</a></li>
-            <li><a href='/contacts/{{ $contact->id }}/delete'>Delete</a></li>
-        </ul>
+    <section class='navMenu'>
+            <p class='nav'><a href='/contacts/{{ $contact->id }}/edit'>Edit</a></p>
+            <p class='nav'><a href='/contacts'>Return to List</a></p>
+            <p class='nav'><a href='/contacts/{{ $contact->id }}/delete'>Delete</a></p>
     </section>
 
 @endsection
