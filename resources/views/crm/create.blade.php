@@ -68,7 +68,7 @@
                        value='{{old('phone')}}'>
             </div>
 
-            <div>
+            <div class='form-group'>
                 <label for='hobbies'>Hobbies
                 </label>
                 @foreach($hobbies as $hobbyId => $hobbyName)
@@ -78,7 +78,9 @@
                                       type='checkbox'
                                       {{--brackets tells php to accept multiple selections and put into array--}}
                                       name='hobbies[]'
-                                      value='{{ $hobbyId }}'> {{ $hobbyName }} </label></div>
+                                      value='{{ $hobbyId }}'
+                                      class='form-control'> {{ $hobbyName }} </label>
+                    </div>
                 @endforeach
             </div>
 

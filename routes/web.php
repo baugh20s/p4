@@ -41,11 +41,23 @@ Route::get('contacts/search-process', 'ContactController@searchProcess');
  */
 Route::get('/contacts/create', 'ContactController@create');
 Route::post('/contacts', 'ContactController@storeNew');
+
+/*
+ * CREATE hobby
+ */
+Route::get('/hobbies/create', 'ContactController@createHobby');
+Route::post('/hobbies', 'ContactController@storeNewHobby');
+
 /*
  * READ contact
  */
 Route::get('/contacts/{id}', 'ContactController@read');
 Route::get('/contacts', 'ContactController@index');
+
+/*
+ * READ hobbies
+ */
+Route::get('/hobbies', 'ContactController@indexHobbies');
 
 /*
 * UPDATE contact

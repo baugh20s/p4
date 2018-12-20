@@ -50,7 +50,7 @@ class ContactController extends Controller
     }
 
     /*
-    * INDEX
+    * Index of contacts
      */
     public function index()
     {
@@ -62,7 +62,19 @@ class ContactController extends Controller
     }
 
     /*
-    * show CREATE form
+     * Index of hobbies
+     */
+    public function indexHobbies()
+    {
+        $hobbies = Hobby::orderBy('hobby_name')->limit(25)->get();
+
+        return view('crm.indexHobbies')->with([
+            'hobbies' => $hobbies,
+        ]);
+    }
+
+    /*
+    * show CREATE contact form
      */
     public function create()
     {
@@ -74,18 +86,26 @@ class ContactController extends Controller
     }
 
     /*
+     * show CREATE hobby form
+     */
+    public function createHobby()
+    {
+        return view('crm.createHobby');
+    }
+
+    /*
      * CREATE record (store record)
      */
     public function storeNew(Request $request)
     {
         # Validate the request data
         $request->validate([
-            'firstName' => 'required|string|between:1,75',
-            'lastName' => 'required|string|between:1,125',
-            'emailType' => 'required|string',
+            'firstName' => 'required|string|alpha|between:1,75',
+            'lastName' => 'required|string|alpha|between:1,125',
+            'emailType' => 'required|string|alpha',
             'email' => 'required|email|between:7,100',
-            'phoneType' => 'required|string',
-            'phone' => 'required',
+            'phoneType' => 'required|string|alpha',
+            'phone' => 'required|string|numeric',
         ]);
 
         $contact = new Contact();
@@ -102,6 +122,26 @@ class ContactController extends Controller
 
         return redirect('/contacts')->with([
             'alert' => 'Your contact was added.'
+        ]);
+    }
+    /*
+     * CREATE hobby
+     */
+    public function storeNewHobby(Request $request)
+    {
+        # Validate the request data
+        $request->validate([
+            'hobbyName' => 'required|string|between:1,50',
+        ]);
+
+        $hobby = new Hobby();
+        $hobby->hobby_name = $request->hobbyName;
+        $hobby->save();
+
+        $hobby->contacts()->sync($request->contacts);
+
+        return redirect('/hobbies')->with([
+            'alert' => 'Your hobby was added.'
         ]);
     }
 
@@ -144,12 +184,12 @@ class ContactController extends Controller
     {
         # Validate the request data
         $request->validate([
-            'firstName' => 'required|string|between:1,75',
-            'lastName' => 'required|string|between:1,125',
-            'emailType' => 'required|string',
-            'email' => 'required|email|between:7,100',
-            'phoneType' => 'required|string',
-            'phone' => 'required',
+            'firstName' => 'required|string|alpha|between:1,75',
+            'lastName' => 'required|string|alpha|between:1,125',
+            'emailType' => 'required|string|alpha',
+            'email' => 'required|email|alpha_num|between:7,100',
+            'phoneType' => 'required|string|alpha',
+            'phone' => 'required|string|numeric',
         ]);
 
         $contact = Contact::find($id);

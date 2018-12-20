@@ -2,6 +2,7 @@
         <p class='nav'><a href='/search'>Search</a></p>
         <p class='nav'><a href='/contacts/create'>Add New</a></p>
         <p class='nav'><a href='/contacts'>Preview Contacts</a></p>
+        <p class='nav'><a href='/hobbies'>Hobbies</a></p>
         <p class='nav'><a href='/contactus'>Contact Us</a></p>
         <p class='nav'><a href='/about'>About</a></p>
 

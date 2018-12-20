@@ -10,11 +10,11 @@
             <label>Phone:</label> <em>({{$contact->phone_type}})</em>
             <p>{{$contact->phone}}</p>
             <label>Hobbies:</label>
-            <p>
+            <ul>
                 @foreach($contact->hobbies as $hobby)
-                    {{ $hobby->hobby_name }}
+                    <li>{{ $hobby->hobby_name }}</li>
                 @endforeach
-            </p>
+             </ul>
         </div>
     </section>
     <section class='navMenu'>

@@ -36,11 +36,9 @@
         <div class='form-group contactForm'>
             @if(count($errors) > 0)
                 <div class='alert alert-danger'>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
                 </div>
             @endif
             @if($firstNameSearch OR $lastNameSearch)
@@ -48,11 +46,9 @@
                     @if(count($searchResults) == 0)
                         No matches found.
                     @else
-                        <ul>
-                            @foreach($searchResults as $contact)
-                                <li><a href='/contacts/{{ $contact->id }}'>{{ $contact->full_name }}</a></li>
-                            @endforeach
-                        </ul>
+                        @foreach($searchResults as $contact)
+                            <p><a href='/contacts/{{ $contact->id }}'>{{ $contact->full_name }}</a></p>
+                        @endforeach
                     @endif
                 </div>
             @endif

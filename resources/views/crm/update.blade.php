@@ -7,7 +7,7 @@
             {{ method_field('put') }}
             {{ csrf_field() }}
 
-            <h3>Add A Contact</h3>
+            <h3>Edit Contact</h3>
 
             <div class='form-group'>
                 <label for='firstName'>First Name
@@ -73,12 +73,15 @@
                 <label for='hobbies'>Hobbies
                 </label>
                 @foreach($hobbies as $hobbyId => $hobbyName)
-                    <div><label><input {{ (in_array($hobbyId, $hobbiesForContact )) ? 'checked' : '' }}
-                                       type='checkbox'
-                                       {{--brackets tells php to accept multiple selections and put into array--}}
-                                       name='hobbies[]'
-                                       value='{{ $hobbyId }}'
-                                       class='form-control'> {{ $hobbyName }} </label></div>
+                    <br/>
+                    <div class='checkbox-inline'>
+                        <label><input {{ (in_array($hobbyId, $hobbiesForContact )) ? 'checked' : '' }}
+                                      type='checkbox'
+                                      {{--brackets tells php to accept multiple selections and put into array--}}
+                                      name='hobbies[]'
+                                      value='{{ $hobbyId }}'
+                                      class='form-control'> {{ $hobbyName }} </label>
+                    </div>
                 @endforeach
             </div>
 
